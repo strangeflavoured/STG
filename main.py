@@ -2,35 +2,7 @@ import itertools
 import networkx as nx
 import matplotlib.pyplot as plt
 
-def ID(a):
-	if a==1:
-		return 1
-	else:
-		return 0
-
-def NOT(a):
-	if a==0:
-		return 1
-	else:
-		return 0
-
-def AND(a,b):
-	if a==1 and b==1:
-		return 1
-	else:
-		return 0
-
-def OR(a,b):
-	if a==1 or b==1:
-		return 1
-	else:
-		return 0
-
-def XOR(a,b):
-	if a==1 and b==0 or a==0 and b==1:
-		return 1
-	else:
-		return 0
+from fkt import *
 
 def rep(a):
 	for i in range(0,len(a)-1):
@@ -70,7 +42,7 @@ for i,j in enumerate(states):
 
 fig,ax=plt.subplots(1,1)
 nx.draw_kamada_kawai(G, node_color='w',node_shape='s',with_labels=True, font_weight='bold')
-#plt.show()
+plt.show()
 
 G.clear()
 plt.close()
@@ -87,7 +59,7 @@ for i,j in enumerate(states):
 
 fig,ax=plt.subplots(1,1)
 nx.draw_kamada_kawai(G, node_color='w',node_shape='s',with_labels=True, font_weight='bold')
-#plt.show()
+plt.show()
 
 G.clear()
 plt.close()
@@ -117,7 +89,7 @@ for i,j in enumerate(states):
 
 fig,ax=plt.subplots(1,1)
 nx.draw_kamada_kawai(G, node_color='w',with_labels=True, font_weight='bold')
-#plt.show()
+plt.show()
 
 G.clear()
 plt.close()	
@@ -146,4 +118,4 @@ nx.draw_kamada_kawai(G, node_color='w',with_labels=True, font_weight='bold')
 plt.show()
 
 G.clear()
-plt.close()	
+plt.close()
