@@ -57,7 +57,7 @@ def imgs(x):
 
 states=list(itertools.product([0,1], repeat=3))
 
-###ASYNCHRON##
+###ASYNCHRONOUS##
 im=[]
 for i,j in enumerate(states):
 	im.append(imgs(j))
@@ -75,7 +75,7 @@ nx.draw_kamada_kawai(G, node_color='w',node_shape='s',with_labels=True, font_wei
 G.clear()
 plt.close()
 
-###SYNCHRON###
+###SYNCHRONOUS###
 im=[]
 for i,j in enumerate(states):
 	im.append(image(j))
@@ -122,7 +122,7 @@ nx.draw_kamada_kawai(G, node_color='w',with_labels=True, font_weight='bold')
 G.clear()
 plt.close()	
 
-###ASYNCHRON###
+###ASYNCHRONOUS###
 states=[start]
 im=[imgs(start)]
 
