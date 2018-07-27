@@ -1,6 +1,10 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+
+from fkt import *
 ##STG OF ALL STATES##
-def alla():
-	states=list(itertools.product([0,1], repeat=3))
+def alla(lst):
+	states=lst
 
 	im=[]
 	for i,j in enumerate(states):
@@ -19,8 +23,8 @@ def alla():
 	G.clear()
 	plt.close()
 
-def alls():
-	states=list(itertools.product([0,1], repeat=3))
+def alls(lst):
+	states=lst
 	im=[]
 	for i,j in enumerate(states):
 		im.append(image(j))
@@ -39,8 +43,7 @@ def alls():
 
 ##STG OF ONE STARTING STATE##
 
-def tras():
-	start=(1,0,1)
+def tras(start):
 	states=[start]
 	im=[image(start)]
 
@@ -67,8 +70,7 @@ def tras():
 	G.clear()
 	plt.close()	
 
-def traa():
-	start=(1,0,1)
+def traa(start):
 	states=[start]
 	im=[imgs(start)]
 
