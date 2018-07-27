@@ -30,7 +30,12 @@ def XOR(a,b):
 
 ################## MODELL ########################
 def image(x):
-	return (NOT(x[2]),ID(x[0]),AND(x[0],x[1]))
+	return (ID(x[0]),
+	NOT(x[2]),
+	OR(NOT(OR(x[3],x[4])),AND(x[1],NOT(x[3])))),
+	AND(x[0],NOT(OR(x[5],OR(x[3],x[4])))),
+	AND(x[0],OR(NOT(x[5]),OR(x[3],x[4])),
+	x[1])
 #################################################
 
 def imgs(x):
