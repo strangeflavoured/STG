@@ -38,8 +38,10 @@ def alls(lst):
 	for i,j in enumerate(states):
 		G.add_edge(j,im[i])
 
+	label=labdic(states)
+
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',node_shape='s',node_size=1000,with_labels=True, font_weight='bold',font_size=10)
+	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
 	plt.show()
 
 	G.clear()
@@ -67,8 +69,10 @@ def tras(start):
 	for i,j in enumerate(states):
 		G.add_edge(j,im[i])
 
+	label=labdic(states)
+
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',with_labels=True, font_weight='bold')
+	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
 	plt.show()
 
 	G.clear()
@@ -93,8 +97,10 @@ def traa(start):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
 
+	label=labdic(states)
+
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',with_labels=True, font_weight='bold')
+	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
 	plt.show()
 
 	G.clear()
