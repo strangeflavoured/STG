@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 
 from fkt import *
 ##STG OF ALL STATES##
-def alla(lst):
+def alla(lst,**kwargs):
+	strg=kwargs.get('string','')
 	states=lst
 
 	im=[]
@@ -16,8 +17,11 @@ def alla(lst):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
 
+	label=labdic(states)
+
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',node_shape='s',with_labels=True, font_weight='bold')
+	nx.draw_networkx(G, pos=nx.kamada_kawai_layout(G),node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/alla{}.svg'.format(strg),dpi=500)
 	plt.show()
 
 	G.clear()
@@ -35,7 +39,7 @@ def alls(lst):
 		G.add_edge(j,im[i])
 
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',node_shape='s',with_labels=True, font_weight='bold')
+	nx.draw_kamada_kawai(G, node_color='w',node_shape='s',node_size=1000,with_labels=True, font_weight='bold',font_size=10)
 	plt.show()
 
 	G.clear()

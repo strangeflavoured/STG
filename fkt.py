@@ -32,9 +32,9 @@ def XOR(a,b):
 def image(x):
 	return (ID(x[0]),
 	NOT(x[2]),
-	OR(NOT(OR(x[3],x[4])),AND(x[1],NOT(x[3])))),
+	OR(NOT(OR(x[3],x[4])),AND(x[1],NOT(x[3]))),
 	AND(x[0],NOT(OR(x[5],OR(x[3],x[4])))),
-	AND(x[0],OR(NOT(x[5]),OR(x[3],x[4])),
+	AND(x[0],OR(NOT(x[5]),OR(x[3],x[4]))),
 	x[1])
 #################################################
 
@@ -55,3 +55,28 @@ def rep(a):
 			break
 		else:
 			return False
+
+def strg(a):
+	S=[]
+	for i,j in enumerate(a):
+		J=''
+		for k,l in enumerate(j):
+			J+='{}'.format(l)
+		S.append(J)
+	return S
+
+def labdic(a):
+	S=strg(a)
+	l={}
+	for i,j in enumerate(a):
+		l.update({j:S[i]})
+	return l
+
+def insrt(lst,val,**kwargs):
+	pos=kwargs.get('position',0)
+	l=[]
+	for i,j in enumerate(lst):
+		a=list(j)
+		a.insert(pos,val)
+		l.append(tuple(a))
+	return l
