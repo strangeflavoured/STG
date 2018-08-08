@@ -80,3 +80,35 @@ def insrt(lst,val,**kwargs):
 		a.insert(pos,val)
 		l.append(tuple(a))
 	return l
+
+def Delay(state,delay):
+	im=image(state)
+	l=[]
+	for i,j in enumerate(state):
+		if j<im[i]:
+			l.append(delay[i][0])
+		elif j>im[i]:
+			l.append(-1*delay[i][1])
+		else:
+			l.append('')
+	return l
+
+def delimg(state,images,delay,itr):
+	Del=Delay(state,delay)
+	lst=[]
+	for i in Del:
+		if isinstance(i,int) or isinstance(i,float):
+			lst.append(abs(i))
+	new=np.amax(lst)
+	print(new)
+	for i in range(0,new+itr):
+		try:
+			images[i+itr]
+		except IndexError:
+			images.append(images[-1].copy())
+	for i,j in enumerate(Del):
+		try:
+			print(images,abs(j),itr,i)
+			images[abs(j)+itr][i]+=np.sign(j)
+		except TypeError:
+			continue
