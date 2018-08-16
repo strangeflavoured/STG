@@ -19,3 +19,5 @@ delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
 #s.traa(start)
 #s.tras(start)
 #s.td(start,delay)
+
+s.retim()
