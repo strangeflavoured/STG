@@ -1,41 +1,51 @@
+import numpy as np
+
 def ID(a):
-	if a==1:
-		return 1
-	else:
-		return 0
+	return a
 
 def NOT(a):
-	if a==0:
-		return 1
-	else:
-		return 0
+	return not a
 
 def AND(a,b):
-	if a==1 and b==1:
-		return 1
-	else:
-		return 0
+	return a and b
 
 def OR(a,b):
-	if a==1 or b==1:
-		return 1
-	else:
-		return 0
+	return a or b
 
 def XOR(a,b):
-	if a==1 and b==0 or a==0 and b==1:
-		return 1
-	else:
-		return 0
+	return a and not b or not a and b
+
+def intlog(x):
+	ref=x.copy()
+	for i,j in enumerate(ref):
+		if ref[i]==0:
+			ref[i]=False
+		elif ref[i]==1:
+			ref[i]=True
+		else:
+			raise ValueError
+	return ref
+
+def logint(ref):
+	for i,j in enumerate(ref):
+		if ref[i]:
+			ref[i]=1
+		else:
+			ref[i]=0
+	return ref
 
 ################## MODELL ########################
+###(S,N,I,K1,K2,A)
 def image(x):
-	return (ID(x[0]),
-	NOT(x[2]),
-	OR(NOT(OR(x[3],x[4])),AND(x[1],NOT(x[3]))),
-	AND(x[0],NOT(OR(x[5],OR(x[3],x[4])))),
-	AND(x[0],OR(NOT(x[5]),OR(x[3],x[4]))),
-	x[1])
+	ref= intlog(x)	
+	im=[ref[0],
+	not ref[2],
+	not ref[4] and not ref[3] or ref[1] and not ref[4],
+	ref[0] and ref[5],
+	ref[0] and not ref[5],
+	ref[1]]
+	im=logint(im)
+	return im
 #################################################
 
 def imgs(x):
