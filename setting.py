@@ -2,7 +2,40 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 from fkt import *
+
+##RETURNS IMAGE OF A STATE##
+def retim():
+	while True:
+		try:
+			inp=input('state: ')
+			mv=False
+			if not inp:
+				break
+			elif len(inp) !=6:
+				if len(inp)==5:
+					if inp[3]=='2':
+						inp=inp[:3]+'01'+inp[4:]
+					elif inp[3]=='1' or inp[3]=='0':
+						inp=inp[:4]+'0'+inp[4:]
+					mv=True						
+				else:
+					raise IndexError		
+			
+			l=''.join(str(i) for i in image(list(map(int,inp))))
+			if mv:
+				if l[4]=='1':
+					l=l[:3]+'2'+l[5:]
+				elif l[4]=='0':
+					l=l[:4]+l[5:]
+			print('image: '+l)
+		except IndexError:
+			print('IndexError: Please enter 5 (multivalued) or 6 (boolean) digits')
+		except ValueError:
+			print('ValueError: Please enter integers 0,1 (2 only multivalued)')
+			
 ##STG OF ALL STATES##
+			
+	
 def alla(lst,**kwargs):
 	strg=kwargs.get('string','')
 	states=lst
