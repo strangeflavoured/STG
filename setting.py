@@ -1,7 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import itertools
-
 from fkt import *
 
 def retim():

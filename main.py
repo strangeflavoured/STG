@@ -15,7 +15,8 @@ wt1=insrt(core,1)
 #Delay of each component in time steps; for activation and inactivation
 delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
 
-s.alla(lst)
+
+#s.alla(lst)
 #s.alls(lst)
 #s.traa(start)
 #s.tras(start)
