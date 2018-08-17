@@ -128,7 +128,7 @@ def delimg(state,images,delay,itr):
 def fulldict(states,images):
 	dic={}
 	for i,j in enumerate(states):
-		dic.update(j=images[i])
+		dic[j]=images[i]
 	return dic
 
 def save(path,data):

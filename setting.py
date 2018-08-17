@@ -1,6 +1,8 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import itertools
+from ast import literal_eval as tpl
+
 from fkt import *
 
 def retim():
@@ -66,7 +68,8 @@ def alls(lst):
 	states=lst
 	im=[]
 	for i,j in enumerate(states):
-		im.append(image(j))
+		im.append(tuple(image(j)))
+
 
 	dic=fulldict(states,im)
 	save('../stgres/alls',dic)
@@ -89,15 +92,15 @@ def alls(lst):
 
 def tras(start):
 	states=[start]
-	im=[image(start)]
+	im=[tuple(image(start))]
 
 	states.append(im[-1])
-	im.append(states[-1])
+	im.append(tuple(states[-1]))
 
 	i=0
 	while not rep(states):	
 		states.append(im[-1])
-		im.append(image(states[-1]))
+		im.append(tuple(image(states[-1])))
 		if i>=10:
 			break
 		i+=1
@@ -182,25 +185,25 @@ def td(start,delay):
 	G.clear()
 	plt.close()
 
-def cotr(**args):
+def cotr(dicts):
 	B={}
-	for m,n in enumerate(list(itertools.combinations(args.keys(),2))):
+	for m,n in enumerate(list(itertools.combinations(dicts.keys(),2))):		
 		A={}
 		for k,l in enumerate([n,n[::-1]]):				
-			for i in args[l[0]]:
-				if i not in args[l[1]]:
+			for i in dicts[l[0]]:
+				if i not in dicts[l[1]]:
 					if i not in A:
-						A[i]=args[l[0]][i]
+						A[i]=[dicts[l[0]][i]]
 					else:
-						if A[i]!=args[l[0]][i]:
-							for j in args[l[0]][i]:
+						if A[i]!=dicts[l[0]][i]:
+							for j in dicts[l[0]][i]:
 								if j not in A[i]:
 									A[i].append(j)
 				else:
-					if args[l[0]][i]!=args[l[1]][i]:
+					if dicts[l[0]][i]!=dicts[l[1]][i]:
 						var=[]
-						for j in args[l[0]][i]:
-							if j not in args[l[1]][i]:
+						for j in dicts[l[0]][i]:
+							if j not in dicts[l[1]][i]:
 								var.append(j)
 						if var:
 							if i not in A:
@@ -210,3 +213,30 @@ def cotr(**args):
 		N=n[0]+n[1]
 		B[N]=A
 	return B
+
+def comp(*args):
+	data={}
+	for i,j in enumerate(args):
+		data[str(i)]=restore(j)
+	res=cotr(data)
+	return res
+	
+def codr(*args):
+	res=comp(*args)
+	for i in res:
+		G=nx.DiGraph()
+		val=[]
+		for n,o in enumerate(res[i].values()):
+			for p,q in enumerate(o):
+				val.append(q)
+		G.add_nodes_from(res[i].keys())
+		G.add_nodes_from(val)
+		for j,k in enumerate(res[i]):
+			for l,m in enumerate(res[i][k]):
+				G.add_edge(k,m)
+	fig,ax=plt.subplots(1,1)
+	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10)#,labels=label)
+	plt.show()
+
+	G.clear()
+	plt.close()

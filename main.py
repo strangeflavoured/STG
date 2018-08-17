@@ -23,3 +23,5 @@ delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
 #s.td(start,delay)
 
 #s.retim()
+
+s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')
