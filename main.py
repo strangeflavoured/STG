@@ -24,4 +24,4 @@ delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
 
 #s.retim()
 
-s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')
+###s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')

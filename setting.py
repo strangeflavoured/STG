@@ -5,7 +5,7 @@ from ast import literal_eval as tpl
 
 from fkt import *
 
-def retim():
+def retim():#returns image of a state given as input
 	while True:
 		try:
 			inp=input('state: ')
@@ -34,10 +34,10 @@ def retim():
 		except ValueError:
 			print('ValueError: Please enter integers 0,1 (2 only multivalued)')
 			
-##STG OF ALL STATES##
-			
+##STG OF ALL STATES##			
 	
 def alla(lst,**kwargs):
+	#calculates and plots asynchronous STG for a list of states
 	strg=kwargs.get('string','')
 	states=lst
 
@@ -53,6 +53,7 @@ def alla(lst,**kwargs):
 	for i,j in enumerate(states):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
+	save('../stgres/allaG',G)
 
 	label=labdic(states)
 
@@ -65,6 +66,7 @@ def alla(lst,**kwargs):
 	plt.close()
 
 def alls(lst):
+	#calculates and plots synchronous STG for a list of states
 	states=lst
 	im=[]
 	for i,j in enumerate(states):
@@ -78,6 +80,7 @@ def alls(lst):
 	G.add_nodes_from(states)
 	for i,j in enumerate(states):
 		G.add_edge(j,im[i])
+	save('../stgres/allsG',G)
 
 	label=labdic(states)
 
@@ -91,6 +94,7 @@ def alls(lst):
 ##STG OF ONE STARTING STATE##
 
 def tras(start):
+	#calculates and plots synchronous trajectory from an initial state
 	states=[start]
 	im=[tuple(image(start))]
 
@@ -112,6 +116,7 @@ def tras(start):
 	G.add_nodes_from(states)
 	for i,j in enumerate(states):
 		G.add_edge(j,im[i])
+	save('../stgres/trasG',G)
 
 	label=labdic(states)
 
@@ -123,6 +128,8 @@ def tras(start):
 	plt.close()	
 
 def traa(start):
+	#calculates and plots asynchronous trajectory from an initial state
+
 	states=[start]
 	im=[imgs(start)]
 
@@ -143,6 +150,7 @@ def traa(start):
 	for i,j in enumerate(states):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
+	save('../stgres/traaG',G)
 
 	label=labdic(states)
 
@@ -154,6 +162,7 @@ def traa(start):
 	plt.close()
 
 def td(start,delay):
+	#work in progress: calculates and plots STG with time delay of components
 	Del=delay
 	states=[start]
 	im=[imgs(start)]
@@ -175,6 +184,7 @@ def td(start,delay):
 	for i,j in enumerate(states):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
+	save('../stgres/tdG',G)
 
 	label=labdic(states)
 
@@ -185,58 +195,78 @@ def td(start,delay):
 	G.clear()
 	plt.close()
 
-def cotr(dicts):
-	B={}
-	for m,n in enumerate(list(itertools.combinations(dicts.keys(),2))):		
-		A={}
-		for k,l in enumerate([n,n[::-1]]):				
-			for i in dicts[l[0]]:
-				if i not in dicts[l[1]]:
-					if i not in A:
-						A[i]=[dicts[l[0]][i]]
-					else:
-						if A[i]!=dicts[l[0]][i]:
-							for j in dicts[l[0]][i]:
-								if j not in A[i]:
-									A[i].append(j)
-				else:
-					if dicts[l[0]][i]!=dicts[l[1]][i]:
-						var=[]
-						for j in dicts[l[0]][i]:
-							if j not in dicts[l[1]][i]:
-								var.append(j)
-						if var:
-							if i not in A:
-								A[i]=var
-							else:
-								A[i].append(var)
-		N=n[0]+n[1]
-		B[N]=A
-	return B
+###########################################################################################################
+###OBSOLETE: networkx.difference(G,H)###
+#def cotr(dicts):
+#	#calculates something to do with the combinations of two states
+#	#important
+#	B={}
+#	for m,n in enumerate(list(itertools.combinations(dicts.keys(),2))):		
+#		A={}
+#		for k,l in enumerate([n,n[::-1]]):				
+#			for i in dicts[l[0]]:
+#				if i not in dicts[l[1]]:
+#					if i not in A:
+#						A[i]=[dicts[l[0]][i]]
+#					else:
+#						if A[i]!=dicts[l[0]][i]:
+#							for j in dicts[l[0]][i]:
+#								if j not in A[i]:
+#									A[i].append(j)
+#				else:
+#					if dicts[l[0]][i]!=dicts[l[1]][i]:
+#						var=[]
+#						for j in dicts[l[0]][i]:
+#							if j not in dicts[l[1]][i]:
+#								var.append(j)
+#						if var:
+#							if i not in A:
+#								A[i]=var
+#							else:
+#								A[i].append(var)
+#		N=n[0]+n[1]
+#		B[N]=A
+#	return B
 
-def comp(*args):
-	data={}
-	for i,j in enumerate(args):
-		data[str(i)]=restore(j)
-	res=cotr(data)
-	return res
+#def comp(*args):
+#	data={}
+#	for i,j in enumerate(args):
+#		data[str(i)]=restore(j)
+#	res=cotr(data)
+#	return res
 	
-def codr(*args):
-	res=comp(*args)
-	for i in res:
-		G=nx.DiGraph()
-		val=[]
-		for n,o in enumerate(res[i].values()):
-			for p,q in enumerate(o):
-				val.append(q)
-		G.add_nodes_from(res[i].keys())
-		G.add_nodes_from(val)
-		for j,k in enumerate(res[i]):
-			for l,m in enumerate(res[i][k]):
-				G.add_edge(k,m)
+#def codr(*args):
+#	#compares and plots trajectories
+#	res=comp(*args)
+#	for i in res:
+#		G=nx.DiGraph()
+#		val=[]
+#		for n,o in enumerate(res[i].values()):
+#			for p,q in enumerate(o):
+#				val.append(q)
+#		G.add_nodes_from(res[i].keys())
+#		G.add_nodes_from(val)
+#		for j,k in enumerate(res[i]):
+#			for l,m in enumerate(res[i][k]):
+#				G.add_edge(k,m)
+#	fig,ax=plt.subplots(1,1)
+#	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10)#,labels=label)
+#	plt.show()
+
+#	G.clear()
+#	plt.close()
+##############################################################################################################
+def diff(*args):
+	graphs=[]
+	for i,j in enumerate(args):
+		graphs[i]=restore(j)
+	DIFF=[]
+	for i,j in enumerate(list(itertools.combinations(range(len(graphs)),2))):
+		DIFF.append(nx.compose(nx.difference(graphs[j[0]],graphs[j[1]]),nx.difference(graphs[j[1]],graphs[j[0]])))
+
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10)#,labels=label)
 	plt.show()
 
 	G.clear()
-	plt.close()
+	plt.close()		
