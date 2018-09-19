@@ -256,17 +256,20 @@ def td(start,delay):
 #	G.clear()
 #	plt.close()
 ##############################################################################################################
+
 def diff(*args):
 	graphs=[]
 	for i,j in enumerate(args):
-		graphs[i]=restore(j)
+		graphs.append(restore(j))
 	DIFF=[]
-	for i,j in enumerate(list(itertools.combinations(range(len(graphs)),2))):
-		DIFF.append(nx.compose(nx.difference(graphs[j[0]],graphs[j[1]]),nx.difference(graphs[j[1]],graphs[j[0]])))
+	for k,l in enumerate(list(itertools.combinations(range(len(graphs)),2))):
+		DIFF.append((nx.difference(graphs[l[0]],graphs[l[1]]),nx.difference(graphs[l[1]],graphs[l[0]])))
 
 	fig,ax=plt.subplots(1,1)
-	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10)#,labels=label)
+
+	for m,n in enumerate(DIFF):
+		nx.draw_kamada_kawai(n[0], node_color='w',edgecolors='b',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='g',font_size=10)#,labels=label)
+		nx.draw_kamada_kawai(n[1], node_color='w',edgecolors='k',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r'ls -a,font_size=10)#,labels=label)
 	plt.show()
 
-	G.clear()
-	plt.close()		
+	plt.close()
