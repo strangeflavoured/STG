@@ -266,10 +266,11 @@ def diff(*args):
 		DIFF.append((nx.difference(graphs[l[0]],graphs[l[1]]),nx.difference(graphs[l[1]],graphs[l[0]])))
 
 	fig,ax=plt.subplots(1,1)
-
+	
+	cl=[(('b','k'),('g','r'))]
 	for m,n in enumerate(DIFF):
-		nx.draw_kamada_kawai(n[0], node_color='w',edgecolors='b',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='g',font_size=10)#,labels=label)
-		nx.draw_kamada_kawai(n[1], node_color='w',edgecolors='k',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r'ls -a,font_size=10)#,labels=label)
+		nx.draw_kamada_kawai(n[0], node_color='w',edgecolors=cl[m][0][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1][0],font_size=10)#,labels=label)
+		nx.draw_kamada_kawai(n[1], node_color='w',edgecolors=cl[m][0][1],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1][1],font_size=10)#,labels=label)
 	plt.show()
 
 	plt.close()
