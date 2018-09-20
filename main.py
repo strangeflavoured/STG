@@ -14,6 +14,7 @@ wt1=insrt(core,1)
 
 #Delay of each component in time steps; for activation and inactivation
 delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
+pc1=((1,1),(2,2),(5,4),(3,3),(3,3),(5,6))
 
 
 #s.alla(lst)
@@ -21,9 +22,10 @@ delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
 #s.traa(start)
 #s.tras(start)
 #s.td(start,delay)
+s.pct(start,pc1)
 
 #s.retim()
 
 ###s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')
 
-s.diff('../stgres/allsG2018-09-19.pickle','../stgres/allaG2018-09-19.pickle')
+#s.diff('../stgres/allsG2018-09-19.pickle','../stgres/allaG2018-09-19.pickle')

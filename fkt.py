@@ -139,3 +139,25 @@ def restore(path):
 	with open(path,'rb') as f:
 		data=p.load(f)
 	return data
+
+def prior(x,priority):
+	im=image(x)
+	img=[]
+	IMG=[]
+	for i,j in enumerate(im):	
+		if j<x[i]:
+			img.append(priority[i][-1])
+		elif j>x[i]:
+			img.append(priority[i][0])
+		else:
+			img.append('')
+	m=min(k for k in img if isinstance(k,int))
+	ind=[]
+	for l,n in enumerate(img):
+		if n==m:
+			ind.append(l)
+	for o,p in enumerate(ind):
+		st=list(x)
+		st[p]=im[p]
+		IMG.append(tuple(st))	
+	return IMG
