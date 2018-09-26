@@ -343,12 +343,19 @@ def diff(*args):
 	DIFF=[]
 	for k,l in enumerate(list(itertools.combinations(range(len(graphs)),2))):
 		DIFF.append(nx.symmetric_difference(graphs[l[0]],graphs[l[1]]))
+		#DIFF.append((nx.difference(graphs[l[0]],graphs[l[1]]),nx.difference(graphs[l[1]],graphs[l[0]])))
 
 	fig,ax=plt.subplots(1,1)
 	
-	cl=[('b','k')]
+	#cl=[(('k','r'),('b','g'))]
+	#for m,n in enumerate(DIFF):
+	#	nx.draw_kamada_kawai(n[0], node_color='w',edgecolors=cl[m][0][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][0][1],font_size=10,labels=labdic(n[0].nodes()))
+	#	nx.draw_kamada_kawai(n[1], node_color='w',edgecolors=cl[m][1][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1][1],font_size=10,labels=labdic(n[1].nodes()))
+		
+	cl=[('k','r')]
 	for m,n in enumerate(DIFF):
-		nx.draw_kamada_kawai(n, node_color='w',edgecolors=cl[m][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1],font_size=10)#,labels=label)
+		label=labdic(n.nodes())
+		nx.draw_kamada_kawai(n, node_color='w',edgecolors=cl[m][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1],font_size=10,labels=label)
+	
 	plt.show()
-
 	plt.close()

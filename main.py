@@ -24,10 +24,10 @@ pc2=((1,1),(1,1),(1,2),(1,1),(1,1),(1,3))
 #s.tras(start)
 #s.td(start,delay)
 #s.pct(start,pc2,name='2')
-s.pca(lst,pc2,name='B',string='B')
+#s.pca(lst,pc2,name='B',string='B')
 
 #s.retim()
 
 ###s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')
 
-#s.diff('../stgres/pctG2018-09-26.pickle','../stgres/pctG22018-09-26.pickle')
+s.diff('../stgres/pcaGA2018-09-26.pickle','../stgres/pcaGB2018-09-26.pickle')
