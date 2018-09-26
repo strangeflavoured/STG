@@ -65,8 +65,10 @@ def alla(lst,**kwargs):
 	G.clear()
 	plt.close()
 
-def alls(lst):
+def alls(lst,**kwargs):
 	#calculates and plots synchronous STG for a list of states
+	strg=kwargs.get('string','')
+
 	states=lst
 	im=[]
 	for i,j in enumerate(states):
@@ -86,6 +88,7 @@ def alls(lst):
 
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/alls{}.svg'.format(strg),dpi=500)
 	plt.show()
 
 	G.clear()
@@ -93,8 +96,10 @@ def alls(lst):
 
 ##STG OF ONE STARTING STATE##
 
-def tras(start):
+def tras(start,**kwargs):
 	#calculates and plots synchronous trajectory from an initial state
+	strg=kwargs.get('string','')
+
 	states=[start]
 	im=[tuple(image(start))]
 
@@ -122,13 +127,15 @@ def tras(start):
 
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/tras{}.svg'.format(strg),dpi=500)
 	plt.show()
 
 	G.clear()
 	plt.close()	
 
-def traa(start):
+def traa(start,**kwargs):
 	#calculates and plots asynchronous trajectory from an initial state
+	strg=kwargs.get('string','')
 
 	states=[start]
 	im=[imgs(start)]
@@ -156,13 +163,16 @@ def traa(start):
 
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/traa{}.svg'.format(strg),dpi=500)
 	plt.show()
 
 	G.clear()
 	plt.close()
 
-def td(start,delay):
+def td(start,delay,**kwargs):
 	#work in progress: calculates and plots STG with time delay of components
+	strg=kwargs.get('string','')
+
 	Del=delay
 	states=[start]
 	im=[imgs(start)]
@@ -190,13 +200,48 @@ def td(start,delay):
 
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/td{}.svg'.format(strg),dpi=500)
 	plt.show()
 
 	G.clear()
 	plt.close()
 
-def pct(start,priority):
+def pca(lst,priority,**kwargs):
 	#calculates and plots priority class trajectories from a given state
+	strg=kwargs.get('string','')
+	string=kwargs.get('name','')
+
+	states=lst
+	
+	im=[]
+	for i,j in enumerate(states):
+		im.append(prior(j,priority))
+
+	dic=fulldict(states,im)
+	save('../stgres/pca'+string,dic)
+
+	G=nx.DiGraph()
+	G.add_nodes_from(states)
+	for i,j in enumerate(states):
+		for k in range(0,len(im[i])):
+			G.add_edge(j,im[i][k])
+	save('../stgres/pcaG'+string,G)
+
+	label=labdic(states)
+
+	fig,ax=plt.subplots(1,1)
+	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/pca{}.svg'.format(strg),dpi=500)
+	plt.show()
+
+	G.clear()
+	plt.close()
+
+def pct(start,priority,**kwargs):
+	#calculates and plots priority class trajectories for all states
+	strg=kwargs.get('string','')
+	string=kwargs.get('name','')
+	
 	states=[start]
 	im=[prior(start,priority)]
 
@@ -210,22 +255,21 @@ def pct(start,priority):
 		k+=1
 
 	dic=fulldict(states,im)
-	save('../stgres/pct',dic)
+	save('../stgres/pct'+string,dic)
 
 	G=nx.DiGraph()
 	G.add_nodes_from(states)
 	for i,j in enumerate(states):
 		for k in range(0,len(im[i])):
 			G.add_edge(j,im[i][k])
-	save('../stgres/pctG',G)
+	save('../stgres/pctG'+string,G)
 
 	label=labdic(states)
 
 	fig,ax=plt.subplots(1,1)
 	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10,labels=label)
+	plt.savefig('../graphics/pct{}.svg'.format(strg),dpi=500)
 	plt.show()
-
-	nx.write_gexf(G, '../stgres/pct.gexf')
 
 	G.clear()
 	plt.close()
@@ -298,14 +342,13 @@ def diff(*args):
 		graphs.append(restore(j))
 	DIFF=[]
 	for k,l in enumerate(list(itertools.combinations(range(len(graphs)),2))):
-		DIFF.append((nx.difference(graphs[l[0]],graphs[l[1]]),nx.difference(graphs[l[1]],graphs[l[0]])))
+		DIFF.append(nx.symmetric_difference(graphs[l[0]],graphs[l[1]]))
 
 	fig,ax=plt.subplots(1,1)
 	
-	cl=[(('b','k'),('g','r'))]
+	cl=[('b','k')]
 	for m,n in enumerate(DIFF):
-		nx.draw_kamada_kawai(n[0], node_color='w',edgecolors=cl[m][0][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1][0],font_size=10)#,labels=label)
-		nx.draw_kamada_kawai(n[1], node_color='w',edgecolors=cl[m][0][1],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1][1],font_size=10)#,labels=label)
+		nx.draw_kamada_kawai(n, node_color='w',edgecolors=cl[m][0],scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color=cl[m][1],font_size=10)#,labels=label)
 	plt.show()
 
 	plt.close()

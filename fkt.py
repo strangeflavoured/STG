@@ -81,8 +81,16 @@ def labdic(a):
 	S=strg(a)
 	l={}
 	for i,j in enumerate(a):
-		l.update({j:S[i]})
+		l.update({j:mv(S[i])})
 	return l
+
+def mv(state):
+	s=''.join(map(str,state))
+	if s[4]=='1':
+		s=s[:3]+'2'+s[5:]
+	else:
+		s=s[:4]+s[5:]
+	return s
 
 def insrt(lst,val,**kwargs):
 	pos=kwargs.get('position',0)
@@ -151,13 +159,16 @@ def prior(x,priority):
 			img.append(priority[i][0])
 		else:
 			img.append('')
-	m=min(k for k in img if isinstance(k,int))
-	ind=[]
-	for l,n in enumerate(img):
-		if n==m:
-			ind.append(l)
-	for o,p in enumerate(ind):
-		st=list(x)
-		st[p]=im[p]
-		IMG.append(tuple(st))	
+	try:
+		m=min(k for k in img if isinstance(k,int))
+		ind=[]
+		for l,n in enumerate(img):
+			if n==m:
+				ind.append(l)
+		for o,p in enumerate(ind):
+			st=list(x)
+			st[p]=im[p]
+			IMG.append(tuple(st))
+	except ValueError:
+		IMG.append(x)	
 	return IMG
