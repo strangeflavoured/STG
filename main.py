@@ -1,7 +1,8 @@
 import itertools
-
+import networkx as nx
 import setting as s
 from fkt import insrt
+import network
 
 ##model: S,N,I,K1,K2,A
 
@@ -14,8 +15,8 @@ lst=list(itertools.product([0,1], repeat=6))
 
 ##Delay of each component in time steps; for activation and inactivation
 #delay=((0,0),(0,0),(0,0),(0,0),(0,0),(0,1))
-#pc1=((1,1),(2,2),(5,4),(3,3),(3,3),(5,6))
-pc2=((1,1),(1,1),(1,2),(1,1),(1,1),(1,3))
+pc1=((1,1),(2,2),(5,4),(3,3),(3,3),(5,6))
+#pc2=((1,1),(1,1),(1,2),(1,1),(1,1),(1,3))
 
 
 #s.alla(lst)
@@ -24,10 +25,10 @@ pc2=((1,1),(1,1),(1,2),(1,1),(1,1),(1,3))
 #s.tras(start)
 #s.td(start,delay)
 #s.pct(start,pc2,name='2')
-#s.pca(lst,pc2,name='B',string='B')
-
+LIST=s.pca(lst,pc1,name='A',string='A')
 #s.retim()
 
 ###s.codr('../stgres/tras2018-08-17.pickle','../stgres/tras22018-08-17.pickle')
 
-s.diff('../stgres/pcaGA2018-09-26.pickle','../stgres/pcaGB2018-09-26.pickle')
+#LIST=s.diff('../stgres/pcaGA2018-10-25.pickle','../stgres/pcaGB2018-10-25.pickle')
+network.dragGraph(LIST[0][1],LIST[0][2],nx.kamada_kawai_layout(LIST[0][0]))
