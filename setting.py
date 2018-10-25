@@ -234,8 +234,10 @@ def pca(lst,priority,**kwargs):
 	plt.savefig('../graphics/pca{}.svg'.format(strg),dpi=500)
 	plt.show()
 
-	G.clear()
+	LIST=[[G,states,nx.edges(G)]]
+	#G.clear()
 	plt.close()
+	return LIST
 
 def pct(start,priority,**kwargs):
 	#calculates and plots priority class trajectories for all states
@@ -274,75 +276,16 @@ def pct(start,priority,**kwargs):
 	G.clear()
 	plt.close()
 	
-###########################################################################################################
-###OBSOLETE: networkx.difference(G,H)###
-#def cotr(dicts):
-#	#calculates something to do with the combinations of two states
-#	#important
-#	B={}
-#	for m,n in enumerate(list(itertools.combinations(dicts.keys(),2))):		
-#		A={}
-#		for k,l in enumerate([n,n[::-1]]):				
-#			for i in dicts[l[0]]:
-#				if i not in dicts[l[1]]:
-#					if i not in A:
-#						A[i]=[dicts[l[0]][i]]
-#					else:
-#						if A[i]!=dicts[l[0]][i]:
-#							for j in dicts[l[0]][i]:
-#								if j not in A[i]:
-#									A[i].append(j)
-#				else:
-#					if dicts[l[0]][i]!=dicts[l[1]][i]:
-#						var=[]
-#						for j in dicts[l[0]][i]:
-#							if j not in dicts[l[1]][i]:
-#								var.append(j)
-#						if var:
-#							if i not in A:
-#								A[i]=var
-#							else:
-#								A[i].append(var)
-#		N=n[0]+n[1]
-#		B[N]=A
-#	return B
-
-#def comp(*args):
-#	data={}
-#	for i,j in enumerate(args):
-#		data[str(i)]=restore(j)
-#	res=cotr(data)
-#	return res
-	
-#def codr(*args):
-#	#compares and plots trajectories
-#	res=comp(*args)
-#	for i in res:
-#		G=nx.DiGraph()
-#		val=[]
-#		for n,o in enumerate(res[i].values()):
-#			for p,q in enumerate(o):
-#				val.append(q)
-#		G.add_nodes_from(res[i].keys())
-#		G.add_nodes_from(val)
-#		for j,k in enumerate(res[i]):
-#			for l,m in enumerate(res[i][k]):
-#				G.add_edge(k,m)
-#	fig,ax=plt.subplots(1,1)
-#	nx.draw_kamada_kawai(G, node_color='w',edgecolors='w',scale=5,node_shape='s',node_size=0,with_labels=True, font_weight='bold',font_color='r',font_size=10)#,labels=label)
-#	plt.show()
-
-#	G.clear()
-#	plt.close()
-##############################################################################################################
-
 def diff(*args):
 	graphs=[]
 	for i,j in enumerate(args):
 		graphs.append(restore(j))
 	DIFF=[]
+	LIST=[]
 	for k,l in enumerate(list(itertools.combinations(range(len(graphs)),2))):
-		DIFF.append(nx.symmetric_difference(graphs[l[0]],graphs[l[1]]))
+		G=nx.symmetric_difference(graphs[l[0]],graphs[l[1]])
+		DIFF.append(G)
+		LIST.append([G,nx.nodes(G),nx.edges(G)])
 		#DIFF.append((nx.difference(graphs[l[0]],graphs[l[1]]),nx.difference(graphs[l[1]],graphs[l[0]])))
 
 	fig,ax=plt.subplots(1,1)
@@ -359,3 +302,4 @@ def diff(*args):
 	
 	plt.show()
 	plt.close()
+	return LIST
